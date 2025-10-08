@@ -4,7 +4,7 @@ defmodule BotexTelegram.MixProject do
   def project do
     [
       app: :botex_telegram,
-      version: "2.0.1",
+      version: "2.0.2",
       description: "Telegram module for https://github.com/bot-ex/bot_ex",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -27,7 +27,7 @@ defmodule BotexTelegram.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:bot_ex, "~> 1.0.1"},
+      {:bot_ex, "~> 1.0.3"},
       {:telegex, "~> 1.8.0"},
       {:finch, "~> 0.19.0"},
       {:timex, "~> 3.7"},

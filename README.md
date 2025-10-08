@@ -8,7 +8,7 @@ Telegram module for [:bot_ex](https://github.com/bot-ex/bot_ex)
   #mix.exs
   def deps do
     [
-      {:botex_telegram, "~> 0.0.1"}
+      {:botex_telegram, "~> 1.0.3"}
     ]
   end
 
@@ -28,8 +28,12 @@ Telegram module for [:bot_ex](https://github.com/bot-ex/bot_ex)
       telegram: [
         #tupples with {module, buffering time}
         {BotexTelegram.Handlers.Start, 500},
-        {BotexTelegram.Handlers.Menu, 500}
+        {BotexTelegram.Handlers.Menu, 500},
+        Handlers.FallbackModule
       ]
+    ],
+    fallback: [
+      telegram: Handlers.FallbackModule
     ]
 
   #the interval for getting updates from telegram api
@@ -70,13 +74,3 @@ end
 ```
 # Routing
 Rouring create from defined handlers. Each handler have function `get_cmd_name/0` that return command name for this handler. When user call `/start` command, router find module for handle by answer `get_cmd_name/0` value.
-
-Optionaly you can create file `routes.exs` and redefine or add aliases for your commands
-
-### Example `routes.exs`
-```elixir
-%{
-  telegram:
-    %{"s" => BotexTelegram.Handlers.Start}
-}
-```

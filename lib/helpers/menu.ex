@@ -27,10 +27,7 @@ defmodule BotexTelegram.Helpers.Menu do
   @doc """
   create telegram menu buttons from `BotEx.Models.Menu`
   """
-  @spec create_menu_buttons(Menu.t(), any()) :: [
-          [Telegex.Type.InlineKeyboardButton.t(), ...],
-          ...
-        ]
+  @spec create_menu_buttons(Menu.t(), any()) :: Telegex.Type.InlineKeyboardMarkup.t()
   def create_menu_buttons(
         %Menu{buttons: buttons_config},
         params

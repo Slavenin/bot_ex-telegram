@@ -84,6 +84,13 @@ defmodule BotexTelegram.Updaters.Telegram do
         } ->
           msg
 
+        %Telegex.Type.Update{
+          message: nil,
+          callback_query: nil,
+          my_chat_member: %Telegex.Type.ChatMemberUpdated{} = msg
+        } ->
+          msg
+
         %Telegex.Type.Update{message: nil, callback_query: msg} ->
           msg
 

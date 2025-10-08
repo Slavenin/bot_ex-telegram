@@ -64,7 +64,7 @@ defmodule BotexTelegram.Services.Menu.Api do
   (`BotEx.Models.Menu.buttons: fn (params) -> [BotEx.Models.Button.t()] end`)
   is function, this params will be applying as argument
   """
-  @spec get_menu_buttons(term(), list()) :: list()
+  @spec get_menu_buttons(term(), any()) :: list()
   def get_menu_buttons(name, params \\ []) do
     try do
       GenServer.call(__MODULE__, {:get_menu, name, params})

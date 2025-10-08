@@ -17,12 +17,14 @@ defmodule BotexTelegram.Services.Telegram.Api do
           Telegex.Type.CallbackQuery.t()
           | Telegex.Type.Message.t()
           | Telegex.Type.PreCheckoutQuery.t()
+          | Telegex.Type.ChatMemberUpdated.t()
         ) ::
           Telegex.Type.User.t() | %{}
   # def get_user(%Telegex.Type.Message{from: nil, forward_from_chat: %{} = tUser}), do: tUser
   def get_user(%Telegex.Type.Message{from: tUser}), do: tUser
   def get_user(%Telegex.Type.CallbackQuery{from: tUser}), do: tUser
   def get_user(%Telegex.Type.PreCheckoutQuery{from: tUser}), do: tUser
+  def get_user(%Telegex.Type.ChatMemberUpdated{from: tUser}), do: tUser
   def get_user(_msg), do: {:error, "Failed to retrieve user"}
 
   @doc "gather data from message or callback"
@@ -30,6 +32,7 @@ defmodule BotexTelegram.Services.Telegram.Api do
           Telegex.Type.CallbackQuery.t()
           | Telegex.Type.Message.t()
           | Telegex.Type.PreCheckoutQuery.t()
+          | Telegex.Type.ChatMemberUpdated.t()
           | nil
         ) ::
           DateTime.t() | nil
@@ -39,6 +42,10 @@ defmodule BotexTelegram.Services.Telegram.Api do
 
   def get_date_time(%Telegex.Type.CallbackQuery{message: message}), do: get_date_time(message)
   def get_date_time(%Telegex.Type.PreCheckoutQuery{}), do: nil
+
+  def get_date_time(%Telegex.Type.ChatMemberUpdated{date: timestamp}),
+    do: timestamp |> DateTime.from_unix!(:second)
+
   def get_date_time(%Message{msg: msg}), do: get_date_time(msg)
   def get_date_time(nil), do: nil
 
@@ -52,6 +59,7 @@ defmodule BotexTelegram.Services.Telegram.Api do
           Telegex.Type.CallbackQuery.t()
           | Telegex.Type.Message.t()
           | Telegex.Type.PreCheckoutQuery.t()
+          | Telegex.Type.ChatMemberUpdated.t()
         ) :: integer()
   def get_chat_id(%Telegex.Type.Message{
         chat: %Telegex.Type.Chat{
@@ -76,6 +84,13 @@ defmodule BotexTelegram.Services.Telegram.Api do
       }),
       do: chat_id
 
+  def get_chat_id(%Telegex.Type.ChatMemberUpdated{
+        chat: %Telegex.Type.Chat{
+          id: chat_id
+        }
+      }),
+      do: chat_id
+
   def get_chat_id(%Message{msg: msg}), do: get_chat_id(msg)
 
   @doc """
@@ -85,10 +100,12 @@ defmodule BotexTelegram.Services.Telegram.Api do
           Telegex.Type.CallbackQuery.t()
           | Telegex.Type.Message.t()
           | Telegex.Type.PreCheckoutQuery.t()
+          | Telegex.Type.ChatMemberUpdated.t()
         ) :: integer()
   def get_message_id(%Telegex.Type.Message{message_id: id}), do: id
   def get_message_id(%Telegex.Type.CallbackQuery{message: msg}), do: get_message_id(msg)
   def get_message_id(%Telegex.Type.PreCheckoutQuery{id: id}), do: id
+  def get_message_id(%Telegex.Type.ChatMemberUpdated{}), do: nil
 
   @doc """
   Breaks the text into parts according

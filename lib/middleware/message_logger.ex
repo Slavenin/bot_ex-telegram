@@ -47,8 +47,10 @@ defmodule BotexTelegram.Middleware.MessageLogger do
   defp message_type(%Telegex.Type.Message{}), do: "Telegram Message"
   defp message_type(%Telegex.Type.CallbackQuery{}), do: "Telegram Callback"
   defp message_type(%Telegex.Type.PreCheckoutQuery{}), do: "Telegram PreCheckoutQuery"
+  defp message_type(%Telegex.Type.ChatMemberUpdated{}), do: "Telegram ChatMemberUpdated"
 
   defp message_text(%Telegex.Type.Message{text: text}), do: text
   defp message_text(%Telegex.Type.CallbackQuery{data: data}), do: data
   defp message_text(%Telegex.Type.PreCheckoutQuery{}), do: nil
+  defp message_text(%Telegex.Type.ChatMemberUpdated{}), do: nil
 end

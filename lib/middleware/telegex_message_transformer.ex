@@ -18,6 +18,7 @@ defmodule BotexTelegram.Middleware.TelegexMessageTransformer do
         %Telegex.Type.Message{text: text} -> text
         %Telegex.Type.CallbackQuery{data: cmd} -> cmd
         %Telegex.Type.PreCheckoutQuery{} -> msg
+        %Telegex.Type.ChatMemberUpdated{} -> msg
       end
 
     t_msg = %Message{
@@ -34,7 +35,7 @@ defmodule BotexTelegram.Middleware.TelegexMessageTransformer do
   # ## Parameters:
   # - text: text from message
   # - t_msg: `BotEx.Models.Message`
-  @spec handle_message(any(), Message.t()) :: Message.t()
+  @spec handle_message(nil | binary(), Message.t()) :: Message.t()
   defp handle_message(nil, t_msg), do: t_msg
 
   defp handle_message(text, t_msg) do
