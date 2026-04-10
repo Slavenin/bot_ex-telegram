@@ -15,7 +15,7 @@ defmodule BotexTelegram.Helpers.Buttons do
   ## Parameters
   - buttons: list of `[[BotEx.Models.Button]]`
   """
-  @spec create_from_model([[Button.t()]]) :: %InlineKeyboardMarkup{
+  @spec create_from_model([[Button.t(), ...], ...]) :: %InlineKeyboardMarkup{
           inline_keyboard: [
             [InlineKeyboardButton.t()]
           ]
